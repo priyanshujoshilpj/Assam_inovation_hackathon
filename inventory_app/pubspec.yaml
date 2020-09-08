@@ -1,4 +1,4 @@
-name: inventory_app
+name: inventoryapp
 description: A new Flutter application.
 
 # The following line prevents the package from being accidentally published to
@@ -21,6 +21,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  google_sign_in: ^4.0.2
   flutter:
     sdk: flutter
 

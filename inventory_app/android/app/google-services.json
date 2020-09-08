@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "980155445581",
+    "firebase_url": "https://assam-hackathon.firebaseio.com",
+    "project_id": "assam-hackathon",
+    "storage_bucket": "assam-hackathon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:980155445581:android:a86619b42771add908c704",
+        "android_client_info": {
+          "package_name": "com.example.inventoryapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "980155445581-bgpqnf0r40041leeqnm1h9beh68vqd5t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.inventoryapp",
+            "certificate_hash": "f77be5071068ce7cea71706d5124186f32bccb5d"
+          }
+        },
+        {
+          "client_id": "980155445581-snq8ddggjs11f4t5rcns8ui5iudk9q56.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMIqJ0ao3VpGxlYZoDisWr4nUB8B_-IUg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "980155445581-snq8ddggjs11f4t5rcns8ui5iudk9q56.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,4 @@
-# inventory_app
+# inventoryapp
 
 A new Flutter application.
 
