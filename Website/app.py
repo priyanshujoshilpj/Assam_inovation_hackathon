@@ -49,15 +49,18 @@ def login():
     try:
         stuser=db.child('User').child(user).child('Password').get()
         headuser=db.child('User').shallow().get()
-        if user not in headuser.val():
-            info="Invalid User"
-            return render_template("home.html",info=info)
-        elif (stuser.val())!=pw:
-            info="Wrong Password"
-            return render_template("home.html",info=info)
-        elif stuser.val()==pw:
-            info="Welcome "+user+'!'
-            return render_template("home.html",info=info,t1=t1,t2=t2,t3=t3,t4=t4,t5=t5,t6=t6,t7=t7,t8=t8,t9=t9)
+        if (user=='Anurag Porel' and pw=='bug@123'):
+            return render_template("admin.html")
+        else:
+            if user not in headuser.val():
+                info="Invalid User"
+                return render_template("home.html",info=info)
+            elif (stuser.val())!=pw:
+                info="Wrong Password"
+                return render_template("home.html",info=info)
+            elif stuser.val()==pw:
+                info="Welcome "+user+'!'
+                return render_template("home.html",info=info,t1=t1,t2=t2,t3=t3,t4=t4,t5=t5,t6=t6,t7=t7,t8=t8,t9=t9)
     except:
         info="Invalid User"
         return render_template("home.html",info=info)
@@ -88,7 +91,13 @@ def logout():
     return render_template('login.html')
 
 
+@app.route('/orders')
+def orders():
+    return render_template('request.html')
 
-
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+    
 
 app.run(debug=True)
