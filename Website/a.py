@@ -14,16 +14,10 @@ config={
 firebase = pyrebase.initialize_app(config)
 db=firebase.database()
 
-bfh=(db.child('Inventory').child('Admin').child('Bullet-Proof Helmets').get()).val()
-bfj=(db.child('Inventory').child('Admin').child('Bullet-Proof Jackets').get()).val()
-d=(db.child('Inventory').child('Admin').child('Doctors').get()).val()
-lj=(db.child('Inventory').child('Admin').child('Life Jackets').get()).val()
+a=(db.child('Requests').child('G Shalom Shreyan').child('Request 1').get()).val()
+a=dict(a)
 
-print(str(bfh))
-print(str(bfj))
-print(str(d))
-print(str(lj))
-
+print(str(a))
 
 
 

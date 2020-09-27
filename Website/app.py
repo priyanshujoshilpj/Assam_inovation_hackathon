@@ -115,6 +115,33 @@ def orders():
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+
+@app.route('/add')
+def add():
+    return render_template('edit_inv.html')
+
+@app.route('/pending')
+def pending():
+    r1=dict((db.child('Requests').child('G Shalom Shreyan').child('Request 1').get()).val())
+    r2=dict((db.child('Requests').child('G Shalom Shreyan').child('Request 2').get()).val())
+    r3=dict((db.child('Requests').child('G Shalom Shreyan').child('Request 3').get()).val())
+    r4=dict((db.child('Requests').child('G Shalom Shreyan').child('Request 4').get()).val())
+    r5=dict((db.child('Requests').child('G Shalom Shreyan').child('Request 5').get()).val())
+    r6=dict((db.child('Requests').child('G Shalom Shreyan').child('Request 6').get()).val())
     
+    t1=('Request 1: '+'Item: '+str(r1['Item'])+',       Quantity: '+str(r1['Quantity'])+',       Status: '+str(r1['Status']))
+    t2=('Request 2: '+'Item: '+str(r2['Item'])+',       Quantity: '+str(r2['Quantity'])+',       Status: '+str(r2['Status']))
+    t3=('Request 3: '+'Item: '+str(r3['Item'])+',       Quantity: '+str(r3['Quantity'])+',       Status: '+str(r3['Status']))
+    t4=('Request 4: '+'Item: '+str(r4['Item'])+',       Quantity: '+str(r4['Quantity'])+',       Status: '+str(r4['Status']))
+    t5=('Request 5: '+'Item: '+str(r5['Item'])+',       Quantity: '+str(r5['Quantity'])+',       Status: '+str(r5['Status']))
+    t6=('Request 6: '+'Item: '+str(r6['Item'])+',       Quantity: '+str(r6['Quantity'])+',       Status: '+str(r6['Status']))
+    return render_template('request_action.html',t1=t1,t2=t2,t3=t3,t4=t4,t5=t5,t6=t6)
+
+@app.route('/track')
+def track():
+    return render_template('track.html')
+
+
+
 
 app.run(debug=True)

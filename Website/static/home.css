@@ -248,3 +248,16 @@ label #sidebar_btn:hover {
     bottom: 10px;
     right: 10px;
 }
+
+a.me{
+    text-align: right;
+    background: royalblue;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+    color: white
+}
+a.me:hover{
+    background: limegreen;
+    text-decoration: none;
+}

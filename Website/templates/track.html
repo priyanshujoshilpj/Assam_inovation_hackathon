@@ -1,12 +1,113 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Home page</title>
+    <link rel="stylesheet" href={{ url_for('static', filename="home.css") }}>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
   </head>
   <body>
-    <header></header>
-    <main></main>
-    <footer></footer>
+    <!--mobile navigation bar start-->
+    <div class="mobile_nav">
+    <input type="checkbox" id="check">
+    <header>
+      <label for="check">
+        <i class="fas fa-bars" id="sidebar_btn"></i>
+      </label>
+    </header>
+      <div class="nav_bar">
+        <img src="../static/img/1.jpg" class="mobile_profile_image" alt="">
+        <i class="fa fa-bars nav_btn"></i>
+      </div>
+      <div class="mobile_nav_items">
+        <a href="#"><i class="fas fa-desktop"></i><span>Inventory</span></a>
+        <a href="#"><i class="fas fa-table"></i><span>Request</span></a>
+        <a href="#"><i class="fas fa-th"></i><span>Contact Support</span></a>
+        <a href="#"><i class="fa fa-sign-out-alt" aria-hidden="true"></i><span>Logout</span></a>
+      </div>
+    </div>
+    <!--mobile navigation bar end-->
+    <!--sidebar start-->
+    <div class="sidebar">
+    
+      <div class="profile_info">
+        <img src="../static/img/1.jpg" class="profile_image" alt="">
+        <h4>Welcome Admin!</h4>
+      </div>
+      <a href={{ url_for('logout')}}><i class="fas fa-desktop"></i><span>Inventory</span></a>
+      <a href={{ url_for('pending')}}><i class="fas fa-table"></i><span>Pending Request</span></a>
+      <a href={{ url_for('add')}}><i class="fas fa-plus-square"></i><span>Add Items</span></a>
+      <a href="#"><i class="fa fa-truck"></i><span>Track Items</span></a>
+      <a href={{ url_for('logout')}}><i class="fas fa-sign-out-alt"></i><span>Log Out</span></a>
+    </div>
+    <!--sidebar end-->
+
+    <div class="content">
+      <h2 style="text-align: center;">Track Items</h2>
+      <table id="customers">
+  <tr>
+    <th>{{t1}}</th>
+  </tr>
+  <tr>
+    <th>{{t2}}</th>
+  </tr>
+  <tr>
+    <th>{{t3}}</th>
+  </tr>
+  <tr>
+    <th>{{t4}}</th>
+  </tr>
+  <tr>
+    <th>{{t5}}</th>
+  </tr>
+  <tr>
+    <th>{{t6}}</th>
+  </tr>
+  <tr>
+    <th>{{t7}}</th>
+  </tr>
+  <tr>
+    <th>{{t8}}</th>
+  </tr>
+  <tr>
+    <th>{{t9}}</th>
+  </tr>
+  <tr>
+    <th>{{t10}}</th>
+  </tr>
+  <tr>
+    <th>{{t11}}</th>
+  </tr>
+  <tr>
+    <th>{{t12}}</th>
+  </tr>
+  <tr>
+    <th>{{t13}}</th>
+  </tr>
+  <tr>
+    <th>{{t14}}</th>
+  </tr>
+  <tr>
+    <th>{{t15}}</th>
+  </tr>
+  <tr>
+    <th>{{t16}}</th>
+  </tr>
+  
+</table>
+    </div>
+    
+
+    <script type="text/javascript">
+    $(document).ready(function(){
+      $('.nav_btn').click(function(){
+        $('.mobile_nav_items').toggleClass('active');
+      });
+    });
+    </script>
+
   </body>
 </html>
+
