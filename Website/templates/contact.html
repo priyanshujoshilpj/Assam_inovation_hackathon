@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Home page</title>
-    <link rel="stylesheet" href="static/home.css">
-    <link rel="stylesheet" href="static/contact.css">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href={{ url_for('static', filename="home.css") }}>
+    <link rel="stylesheet" href={{ url_for('static', filename="contact.css") }}>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
   </head>
@@ -38,8 +38,8 @@
         <h4>{{info}}</h4>
       </div>
       <a href={{ url_for('logout')}}><i class="fas fa-desktop"></i><span>Inventory</span></a>
-      <a href="#"><i class="fas fa-table"></i><span>Request</span></a>
-      <a href={{ url_for('contact')}}><i class="fas fa-th"></i><span>Contact Support</span></a>
+      <a href={{ url_for('orders')}}><i class="fas fa-table"></i><span>Request</span></a>
+      <a href="#"><i class="fas fa-th"></i><span>Contact Support</span></a>
       <a href={{ url_for('logout')}}><i class="fas fa-sign-out-alt"></i><span>Log Out</span></a>
     </div>
     <!--sidebar end-->

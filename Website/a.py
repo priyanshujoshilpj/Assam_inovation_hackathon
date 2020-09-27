@@ -14,6 +14,16 @@ config={
 firebase = pyrebase.initialize_app(config)
 db=firebase.database()
 
-inventory=db.child('Inventory-User')
-blanket=inventory.child('Blanket').get()
-print(str(blanket.val()))
+blanket=(db.child('Inventory').child('User').child('Blankets').get()).val()
+food=(db.child('Inventory').child('User').child('Canned Food').get()).val()
+c=(db.child('Inventory').child('User').child('Drinking Water').get()).val()
+d=(db.child('Inventory').child('User').child('Blankets').get()).val()
+
+print(str(blanket))
+print(str(food))
+print(str(c))
+print(str(d))
+
+
+
+
