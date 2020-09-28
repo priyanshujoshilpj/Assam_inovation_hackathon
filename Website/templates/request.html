@@ -45,30 +45,33 @@
     <!--sidebar end-->
 
     <div class="content">
-      <h2 style="text-align: center;">Inventory </h2>
-      <h8 style="text-align: left;padding-top: 25px; padding-bottom:40px;">Name: </h8>
-                            <select name="types" id='types' class="type">
-                                <option value="select" disabled selected hidden>Select your Item</option>
-                                <option value="seller">Item1</option>
-                                <option value="buyer">Item2</option>
-                                <option value="buyer">Item3</option>
-                                <option value="buyer">Item4</option>
-                                <option value="buyer">Item5</option>
-                            </select>
-      <hr>
-      <h9 style="text-align: left; padding-top: 25px;">Quantity: </h9>
-      <label for="tentacles"></label>
+      <h2 style="text-align: center;">Request Order</h2>
+      <form name="myForm" action={{ url_for("book")}}>
+        <h8 style="text-align: left;padding-top: 25px; padding-bottom:40px;">Name: </h8>
+                              <select name="types" id='types' class="type" required>
+                                  <option value="select" disabled selected hidden>Select your Item</option>
+                                  <option value={{t1}}>{{t1}}</option>
+                                  <option value={{t2}}>{{t2}}</option>
+                                  <option value={{t3}}>{{t3}}</option>
+                                  <option value={{t4}}>{{t4}}</option>
+                                  <option value={{t5}}>{{t5}}</option>
+                                  <option value={{t6}}>{{t6}}</option>
+                                  <option value={{t7}}>{{t7}}</option>
+                                  <option value={{t8}}>{{t8}}</option>
+                              </select>
+        <hr>
+        <h9 style="text-align: left; padding-top: 25px;">Quantity: </h9>
+        <label for="tentacles"></label>
 
-      <input type="number" id="tentacles" name="tentacles"
-       min="1" max="1000">
-      <hr>
-      <form name="myForm" action="/action_page.php" onsubmit="return validateForm()" method="post" required>
-      Address: <input type="text" name="fname">
+        <input type="number" id="tentacles" name="tentacles"
+        min="1" max="1000" required>
+        <hr>
+        <h9 style="text-align: left; padding-top: 25px;">Address: <input type="text" name="fname" required></h9>
+        <div id="mybutton">
+          <input type="submit" placeholder="Request" class="save">
+        </div>
       </form>
 
-      <div id="mybutton">
-        <button class="save">Save</button>
-      </div>
     </div>
     
 

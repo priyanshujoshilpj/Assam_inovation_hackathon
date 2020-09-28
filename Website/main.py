@@ -119,7 +119,15 @@ def logout():
 @app.route('/orders')
 def orders():
     if ("user" and "password") in session:
-        return render_template('request.html',info=session['user'])
+        t1='Blanket'
+        t2='Canned_Food'
+        t3='Drinking_Water'
+        t4='Emergency_Light'
+        t5='First_Aid_Kit'
+        t6='Shelter_Available'
+        t7='Shelter_Occupied'
+        t8='Food_for_Infants_and_the_Elderly'
+        return render_template('request.html',info=session['user'],t1=t1,t2=t2,t3=t3,t4=t4,t5=t5,t6=t6,t7=t7,t8=t8)
     else:
         return redirect(url_for('logout'))
     
@@ -185,6 +193,68 @@ def support():
             yag.send('thebugslayers007@gmail.com','Query',fm)
             yag.send(str(mail),'Query',content)
         return redirect(url_for('contact'))
+    else:
+        return redirect(url_for('logout'))
+
+@app.route("/book",methods=["POST","GET"])
+def book():
+    if ("user" and "password") in session:
+        item=request.args['types']
+        quantity=request.args['tentacles']
+        destiny=request.args['fname']
+
+        data={"Address":destiny,"Item":item, "Quantity":quantity, "Status":"Pending"}
+        re=db.child("Requests").child("G Shalom Shreyan").shallow().get()
+        for i in range(1,1000):
+            brh="Request "+str(i)
+            if brh not in re.val():
+                db.child("Requests").child("G Shalom Shreyan").child(brh).set(data)
+                break
+            else:
+                continue
+        return redirect(url_for("orders"))
+    else:
+        return redirect(url_for('logout'))
+
+@app.route("/details",methods=["POST","GET"])
+def details():
+    if ("user" and "password") in session and (session["user"]=="Anurag Porel" and session["password"]=="bug@123"):
+        inv_type=request.args['types']
+        item=request.args['fname1']
+        quantity=request.args['tentacles']
+        item_user=db.child('Inventory').child('User').shallow().get()
+        item_admin=db.child('Inventory').child('Admin').shallow().get()
+        if inv_type=='Admin':
+            item_id=request.args['fname2']
+            origin=request.args['fname3']
+            data1={"Item":item+item_id,"Origin":origin}
+            re=db.child("Tracking").shallow().get()
+            for i in range(1,1000):
+                brh="Order "+str(i)
+                if brh not in re.val():
+                    db.child('Tracking').child(brh).set(data1)
+                    break
+                else:
+                    continue
+            if item in item_admin.val():
+                temp=(db.child('Inventory').child('Admin').child(item).get()).val()
+                old=int(temp)
+                new=(old+int(quantity))
+                db.child('Inventory').child('Admin').child(item).set(new)
+            else:
+                db.child('Inventory').child('Admin').child(item).set(quantity)
+        elif inv_type=='User':
+            if item in item_user.val():
+                temp=(db.child('Inventory').child('User').child(item).get()).val()
+                old=int(temp)
+                new=(old+int(quantity))
+                db.child('Inventory').child('User').child(item).set(new)
+            else:
+                db.child('Inventory').child('User').child(item).set(quantity)
+        return redirect(url_for("add"))
+
+    elif ("user" and "password") in session and (session["user"]!="Anurag Porel" or session["password"]!="bug@123"):
+        return render_template("404.html")
     else:
         return redirect(url_for('logout'))
 

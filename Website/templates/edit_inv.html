@@ -47,30 +47,31 @@
 
     <div class="content">
       <h2 style="text-align: center;">Add Items</h2>
+      <form name="myForm" action={{ url_for("details")}}>
       <h8 style="text-align: left;padding-top: 25px; padding-bottom:40px;">Preference: </h8>
-                            <select name="types" id='types' class="type">
+                            <select name="types" id='types' class="type" required>
                                 <option value="select" disabled selected hidden>Choose your preference</option>
-                                <option value="seller">Admin User Credential</option>
-                                <option value="seller">Normal User Credential</option>
+                                <option value="Admin">Admin User Credential</option>
+                                <option value="User">Normal User Credential</option>
                             </select>
       <hr>
-      <form name="myForm" action="/action_page.php" onsubmit="return validateForm()" method="post" required>
-      Name: <input type="text" name="fname">
-      </form>
+      <h9 style="text-align: left; padding-top: 25px;">Name: <input type="text" name="fname1" required></h9>
       <hr>
-      <form name="myForm" action="/action_page.php" onsubmit="return validateForm()" method="post" required>
-      Item I'd: <input type="text" name="fname">
-      </form>
+      <h9 style="text-align: left; padding-top: 25px;">Item I'd: <input type="text" name="fname2"></h9>
       <hr>
       <h9 style="text-align: left; padding-top: 25px;">Quantity: </h9>
       <label for="tentacles"></label>
 
       <input type="number" id="tentacles" name="tentacles"
-       min="1" max="1000">
+       min="1" max="1000" required>
+      <hr>
+
+      <h9 style="text-align: left; padding-top: 25px;">Origin: <input type="text" name="fname3" ></h9>
 
       <div id="mybutton">
-        <button class="save">Add</button>
+        <input type="submit" placeholder="Add" class="save">
       </div>
+    </form>
     </div>
     </div>
     
