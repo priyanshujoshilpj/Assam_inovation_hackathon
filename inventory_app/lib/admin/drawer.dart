@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:inventoryapp/contactUs.dart';
-import 'package:inventoryapp/currentUserProfileData.dart';
-import 'package:inventoryapp/inventory.dart';
-import 'package:inventoryapp/profile.dart';
-import 'package:inventoryapp/profile_noGoogle.dart';
-import 'package:inventoryapp/requests.dart';
+import 'package:inventoryapp/admin/profile_admin.dart';
+import 'package:inventoryapp/admin/inventory.dart';
+import 'package:inventoryapp/admin/requests.dart';
 import 'package:inventoryapp/splash.dart';
 
 class MyDrawer extends StatelessWidget{
@@ -17,15 +14,27 @@ class MyDrawer extends StatelessWidget{
     return Drawer(
         child: ListView(
               children: <Widget>[
+                DrawerHeader(
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 50.0),
+                    child: Text(
+                      'Admin',
+                      textAlign: TextAlign.center,
+                      textScaleFactor: 1.5,
+                    ),
+                  ),
+                ),
                 Padding(
-                  padding: EdgeInsets.only(top: (MediaQuery.of(context).size.height)*0.3 , left: 20.00),
+                  padding: EdgeInsets.only(top: (MediaQuery.of(context).size.height)*0.15 , left: 20.00),
                   child: ListTile(
                     title: Text(
                       'My Profile',
                       textScaleFactor: 1.5,
                     ),
                     onTap: (){
-                      myProfileOnTap(context);
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => ProfileScreenAdmin()
+                      ));
                     },
                   ),
                 ),
@@ -58,20 +67,6 @@ class MyDrawer extends StatelessWidget{
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 20.00),
-                  child: ListTile(
-                    title: Text(
-                      'Contact Support',
-                      textScaleFactor: 1.5,
-                    ),
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => SendEmail()
-                      ));
-                    },
-                  ),
-                ),
-                Padding(
                   padding: EdgeInsets.only(top: (MediaQuery.of(context).size.height)*0.2 , left: 20.00),
                   child: ListTile(
                     title: Text(
@@ -90,18 +85,5 @@ class MyDrawer extends StatelessWidget{
               ],
             )
     );
-  }
-
-  void myProfileOnTap(BuildContext context){
-    if(currentUserData.Password != null){
-      Navigator.push(context, MaterialPageRoute(
-          builder: (context) => ProfileScreenDirect()
-      ));
-    }
-    else{
-      Navigator.push(context, MaterialPageRoute(
-          builder: (context) => ProfileScreen()
-      ));
-    }
   }
 }

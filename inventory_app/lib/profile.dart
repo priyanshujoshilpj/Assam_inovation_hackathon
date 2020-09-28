@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:inventoryapp/currentUserProfileData.dart';
 import 'package:inventoryapp/drawer.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({Key key}) : super(key: key);
@@ -14,6 +16,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   GoogleSignInAccount account;
   GoogleSignInAuthentication auth;
   bool gotProfile = false;
+  final dbRefUser = FirebaseDatabase.instance.reference().child("User");
 
   @override
   void initState() {
@@ -40,7 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Padding(
                   padding: EdgeInsets.only(left: 10.00),
                   child: IconButton(
-                    icon: Icon(Icons.drag_handle),
+                    icon: Icon(Icons.dehaze),
                     iconSize: 32,
                     color: Colors.white,
                     onPressed: (){
@@ -79,7 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Padding(
                   padding: EdgeInsets.only(top: 30.00),
                   child: Text(
-                    "Hello ${account.displayName}",
+                    "Hello ${account.displayName.split(" ")[0]}",
                     style: TextStyle(
                       fontSize: 28.00,
                       color: Colors.white
@@ -131,8 +134,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
     await googleSignIn.signInSilently();
     account = googleSignIn.currentUser;
     auth = await account.authentication;
+    currentUserData.UserName = account.displayName;
+    currentUserData.EmailID = account.email;
     setState(() {
       gotProfile = true;
+      dbRefUser.once().then((DataSnapshot snapshot) {
+        print('Data : ${snapshot.value}');
+        print(snapshot.value.toString().contains(account.email));
+        if(!snapshot.value.toString().contains(account.email)){
+          dbRefUser.child("${account.displayName}").set(
+              {
+                'Email' : account.email,
+                'Username' : account.displayName
+              }
+          );
+        }
+      });
     });
   }
 }
