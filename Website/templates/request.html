@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Responsive Home page</title>
-    <link rel="stylesheet" href="static/home.css">
+    <link rel="stylesheet" href={{ url_for('static', filename="home.css") }}>
+    <link rel="stylesheet" href={{ url_for('static', filename="contact.css") }}>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
   </head>
@@ -45,45 +46,30 @@
 
     <div class="content">
       <h2 style="text-align: center;">Inventory </h2>
-      <table id="customers">
-  <tr>
-    <th>{{t1}}</th>
-  </tr>
-   <tr>
-    <th>{{t2}}</th>
-  </tr>
-   <tr>
-    <th>{{t3}}</th>
-  </tr>
-   <tr>
-    <th>{{t4}}</th>
-  </tr>
-   <tr>
-    <th>{{t5}}</th>
-  </tr>
-   <tr>
-    <th>{{t6}}</th>
-  </tr>
-   <tr>
-    <th>{{t7}}</th>
-  </tr>
-   <tr>
-    <th>{{t8}}</th>
-  </tr>
-   <tr>
-    <th>{{t9}}</th>
-  </tr>
-   <tr>
-    <th>{{t10}}</th>
-  </tr>
-   <tr>
-    <th>{{t11}}</th>
-  </tr>
-   <tr>
-    <th>{{t12}}</th>
-  </tr>
-  
-</table>
+      <h8 style="text-align: left;padding-top: 25px; padding-bottom:40px;">Name: </h8>
+       <div class="dropdown">
+        <button onclick="myFunction()" class="dropbtn">Selected Item</button>
+        <div id="myDropdown" class="dropdown-content">
+          <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+          <a href="#about">Item1</a>
+          <a href="#base">Item2</a>
+          <a href="#blog">Item3</a>
+          <a href="#contact">Item4</a>
+          <a href="#custom">Item5</a>
+          <a href="#support">Item6</a>
+          <a href="#tools">Item7</a>
+        </div>
+       </div> 
+      <hr>
+      <h9 style="text-align: left; padding-top: 25px;">Quantity: </h9>
+      <label for="tentacles"></label>
+
+      <input type="number" id="tentacles" name="tentacles"
+       min="1" max="10">
+
+      <div id="mybutton">
+        <button class="save">Save</button>
+      </div>
     </div>
     
 
