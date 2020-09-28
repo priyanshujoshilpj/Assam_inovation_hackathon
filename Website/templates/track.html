@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Home page</title>
+    <title>Admin Order History</title>
     <link rel="stylesheet" href={{ url_for('static', filename="home.css") }}>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
@@ -34,7 +34,7 @@
     
       <div class="profile_info">
         <img src="../static/img/1.jpg" class="profile_image" alt="">
-        <h4>Welcome Admin!</h4>
+        <h4>Admin</h4>
       </div>
       <a href={{ url_for('inventory')}}><i class="fas fa-desktop"></i><span>Inventory</span></a>
       <a href={{ url_for('pending')}}><i class="fas fa-table"></i><span>Pending Request</span></a>
@@ -50,51 +50,7 @@
   <tr>
     <th>{{t1}}</th>
   </tr>
-  <tr>
-    <th>{{t2}}</th>
-  </tr>
-  <tr>
-    <th>{{t3}}</th>
-  </tr>
-  <tr>
-    <th>{{t4}}</th>
-  </tr>
-  <tr>
-    <th>{{t5}}</th>
-  </tr>
-  <tr>
-    <th>{{t6}}</th>
-  </tr>
-  <tr>
-    <th>{{t7}}</th>
-  </tr>
-  <tr>
-    <th>{{t8}}</th>
-  </tr>
-  <tr>
-    <th>{{t9}}</th>
-  </tr>
-  <tr>
-    <th>{{t10}}</th>
-  </tr>
-  <tr>
-    <th>{{t11}}</th>
-  </tr>
-  <tr>
-    <th>{{t12}}</th>
-  </tr>
-  <tr>
-    <th>{{t13}}</th>
-  </tr>
-  <tr>
-    <th>{{t14}}</th>
-  </tr>
-  <tr>
-    <th>{{t15}}</th>
-  </tr>
-  <tr>
-    <th>{{t16}}</th>
-  </tr>
+  
   
 </table>
     </div>

@@ -87,7 +87,7 @@ def inventory():
                     info="Wrong Password"
                     return render_template("login.html",info=info)
                 elif stuser.val()==pw:
-                    info="Welcome "+user+'!'
+                    info=user
                     return render_template("home.html",info=info,t1=t1,t2=t2,t3=t3,t4=t4,t5=t5,t6=t6,t7=t7,t8=t8)
         except:
             info="Invalid User"
@@ -119,7 +119,7 @@ def logout():
 @app.route('/orders')
 def orders():
     if ("user" and "password") in session:
-        return render_template('request.html')
+        return render_template('request.html',info=session['user'])
     else:
         return redirect(url_for('logout'))
     
@@ -127,42 +127,46 @@ def orders():
 @app.route('/contact')
 def contact():
     if ("user" and "password") in session:
-        return render_template('contact.html')
+        return render_template('contact.html',info=session['user'])
     else:
         return redirect(url_for('logout'))
 
 @app.route('/add')
 def add():
-    if ("user" and "password") in session:
+    if ("user" and "password") in session and (session["user"]=="Anurag Porel" and session["password"]=="bug@123"):
         return render_template('edit_inv.html')
+    elif ("user" and "password") in session and (session["user"]!="Anurag Porel" or session["password"]!="bug@123"):
+        return render_template("404.html")
     else:
         return redirect(url_for('logout'))
     
 
 @app.route('/pending')
 def pending():
-    if ("user" and "password") in session:
+    if ("user" and "password") in session and (session["user"]=="Anurag Porel" and session["password"]=="bug@123"):
         r1=dict((db.child('Requests').child('G Shalom Shreyan').child('Request 1').get()).val())
         r2=dict((db.child('Requests').child('G Shalom Shreyan').child('Request 2').get()).val())
-        r3=dict((db.child('Requests').child('G Shalom Shreyan').child('Request 3').get()).val())
-        r4=dict((db.child('Requests').child('G Shalom Shreyan').child('Request 4').get()).val())
-        r5=dict((db.child('Requests').child('G Shalom Shreyan').child('Request 5').get()).val())
-        r6=dict((db.child('Requests').child('G Shalom Shreyan').child('Request 6').get()).val())
         
-        t1=('Request 1: '+'Item: '+str(r1['Item'])+',       Quantity: '+str(r1['Quantity'])+',       Status: '+str(r1['Status']))
-        t2=('Request 2: '+'Item: '+str(r2['Item'])+',       Quantity: '+str(r2['Quantity'])+',       Status: '+str(r2['Status']))
-        t3=('Request 3: '+'Item: '+str(r3['Item'])+',       Quantity: '+str(r3['Quantity'])+',       Status: '+str(r3['Status']))
-        t4=('Request 4: '+'Item: '+str(r4['Item'])+',       Quantity: '+str(r4['Quantity'])+',       Status: '+str(r4['Status']))
-        t5=('Request 5: '+'Item: '+str(r5['Item'])+',       Quantity: '+str(r5['Quantity'])+',       Status: '+str(r5['Status']))
-        t6=('Request 6: '+'Item: '+str(r6['Item'])+',       Quantity: '+str(r6['Quantity'])+',       Status: '+str(r6['Status']))
-        return render_template('request_action.html',t1=t1,t2=t2,t3=t3,t4=t4,t5=t5,t6=t6)
+        
+        t1=('Request 1: '+'Item: '+str(r1['Item'])+', Quantity: '+str(r1['Quantity'])+', Status: '+str(r1['Status'])+', Destination: '+str(r1['Address']))
+        t2=('Request 2: '+'Item: '+str(r2['Item'])+', Quantity: '+str(r2['Quantity'])+', Status: '+str(r2['Status'])+', Destination: '+str(r2['Address']))
+        
+        return render_template('request_action.html',t1=t1,t2=t2)
+    elif ("user" and "password") in session and (session["user"]!="Anurag Porel" or session["password"]!="bug@123"):
+        return render_template("404.html")
     else:
         return redirect(url_for('logout'))
 
 @app.route('/track')
 def track():
-    if ("user" and "password") in session:
-        return render_template('track.html')
+    if ("user" and "password") in session and (session["user"]=="Anurag Porel" and session["password"]=="bug@123"):
+        r1=dict((db.child('Tracking').child('Order 1').get()).val())
+        
+        
+        t1=('Order 1: '+'Item: '+ str(r1['Item'])+', Origin: '+str(r1['Origin']))
+        return render_template('track.html',t1=t1)
+    elif ("user" and "password") in session and (session["user"]!="Anurag Porel" or session["password"]!="bug@123"):
+        return render_template("404.html") 
     else:
         return redirect(url_for('logout'))
 
