@@ -29,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       key: _scaffoldKey,
-      body: Column(
+      body: ListView(
         children: [
           Padding(
             padding: EdgeInsets.zero,
@@ -177,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.zero,
+            padding: EdgeInsets.only(top: 20.0, left: size.width*0.3, right: size.width*0.3),
             child: RaisedButton(
               onPressed: () {
                 startSignIn();
