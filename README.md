@@ -37,3 +37,9 @@ In the Requests section he can see all the requests received from the public use
  Under the Inventory section he has access to both public inventories and Confidential Inventories. The Confidential Inventory is only visible for admin users such as Bullet proof jackets, hats etc. He can add or remove the inventory items and also update the quantity of previous inventory items.
 #  Tracking
 On the home page there is a Floating Action Button of QR code Scanner, which is not accessible now since we don't have a host for the website at the moment, but in future on scanning the QR code of the item, will redirect to our website where we can access all the history of the item. 
+
+# CONTRIBUTORS
+Priyanshu Joshi
+Anurag Porel
+Aditya Choudhari
+G Shalom
