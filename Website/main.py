@@ -119,14 +119,15 @@ def logout():
 @app.route('/orders')
 def orders():
     if ("user" and "password") in session:
-        t1='Blanket'
+        t1='Blankets'
         t2='Canned_Food'
         t3='Drinking_Water'
         t4='Emergency_Flashlight'
         t5='First_Aid_Kit'
         t6='Shelter_Available'
         t7='Food_for_Infants_and_the_Elderly'
-        return render_template('request.html',info=session['user'],t1=t1,t2=t2,t3=t3,t4=t4,t5=t5,t6=t6,t7=t7)
+        t8='Clothes'
+        return render_template('request.html',info=session['user'],t1=t1,t2=t2,t3=t3,t4=t4,t5=t5,t6=t6,t7=t7,t8=t8)
     else:
         return redirect(url_for('logout'))
     
