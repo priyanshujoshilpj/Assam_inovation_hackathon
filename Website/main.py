@@ -103,7 +103,6 @@ def signup():
         if username not in users.val():
             data={"Username":username,"Email":email,"Password":password}
             db.child("User").child(str(username)).set(data)
-            db.child("Requests").child(str(username)).child("Request").set("None")
             return render_template("login.html",info="Successfully Signed Up! Try Login!")
         else:
             return render_template("login.html",info="Already have an account! Try Login!")
@@ -123,12 +122,11 @@ def orders():
         t1='Blanket'
         t2='Canned_Food'
         t3='Drinking_Water'
-        t4='Emergency_Light'
+        t4='Emergency_Flashlight'
         t5='First_Aid_Kit'
         t6='Shelter_Available'
-        t7='Shelter_Occupied'
-        t8='Food_for_Infants_and_the_Elderly'
-        return render_template('request.html',info=session['user'],t1=t1,t2=t2,t3=t3,t4=t4,t5=t5,t6=t6,t7=t7,t8=t8)
+        t7='Food_for_Infants_and_the_Elderly'
+        return render_template('request.html',info=session['user'],t1=t1,t2=t2,t3=t3,t4=t4,t5=t5,t6=t6,t7=t7)
     else:
         return redirect(url_for('logout'))
     
@@ -205,16 +203,21 @@ def book():
         item=request.args['types']
         quantity=request.args['tentacles']
         destiny=request.args['fname']
+        u=(session['user'])
 
         data={"Address":destiny,"Item":item, "Quantity":quantity, "Status":"Pending"}
-        re=db.child("Requests").child(session['user']).shallow().get()
-        for i in range(1,1000):
-            brh="Request "+str(i)
-            if brh not in re.val():
-                db.child("Requests").child(session['user']).child(brh).set(data)
-                break
-            else:
-                continue
+        temp=db.child("Requests").shallow().get()
+        if u in temp.val():
+            re=db.child("Requests").child(session['user']).shallow().get()
+            for i in range(1,1000):
+                brh="Request "+str(i)
+                if brh not in re.val():
+                    db.child("Requests").child(session['user']).child(brh).set(data)
+                    break
+                else:
+                    continue
+        else:
+            db.child("Requests").child(session['user']).child('Request 1').set(data)
         return redirect(url_for("orders"))
     else:
         return redirect(url_for('logout'))
