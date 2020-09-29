@@ -6,12 +6,12 @@
 Keeping the track of inventory manually, usually in a ledger, is tedious and time-consuming. It is simple and inexpensive but human error can cause various issues. Incorrect inventory counts and documentation errors are problems faced by the industry and are difficult to track down. Our inventory solution can be used at times of natural calamities and for the tracking of secret items like weapons. During natural calamities, users will be able to request necessary items via our app/website. Our solution is for making things simpler, which is easy to use and can be easily implemented. 
 
 ## TECHNOLOGIES USED
-HTML
-CSS
-JavaScript
-Flutter
-Firebase
-Flask
+- HTML
+- CSS
+- JavaScript
+- Flutter
+- Firebase
+- Flask
 
 ## SPECIFICATIONS
 A user can access the app/website through Email ID or he/she can sign in with Google.
