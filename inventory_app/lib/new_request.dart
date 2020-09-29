@@ -15,6 +15,7 @@ class NewRequestsState extends State<NewRequests> {
 
   NewRequestsState();
   TextEditingController quantity = TextEditingController();
+  TextEditingController address = TextEditingController();
   final dbRefUser = FirebaseDatabase.instance.reference().child("Inventory").child("User");
   List<dynamic> lists = [];
   final List<DropdownMenuItem> items = [];
@@ -127,7 +128,7 @@ class NewRequestsState extends State<NewRequests> {
                 )
               ),
               Padding(
-                padding: EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
+                padding: EdgeInsets.only(top: 30.0, left: 30.0, right: 30.0),
                 child: TextFormField(
                   keyboardType: TextInputType.number,
                   controller: quantity,
@@ -144,20 +145,58 @@ class NewRequestsState extends State<NewRequests> {
                       hintText: 'Enter desired quantity',
                       enabled: enableQuantity,
                       enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0)
+                          borderRadius: BorderRadius.circular(10.0),
+                        borderSide: BorderSide(
+                          color: Color(0xFF536DFE)
+                        )
                       ),
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0))
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                              color: Color(0xFF536DFE)
+                          ))
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 30.0, left: 30.0, right: 30.0),
+                child: TextFormField(
+                  keyboardType: TextInputType.text,
+                  controller: address,
+                  validator: (String value){
+                    if(value.isEmpty){
+                      return 'Enter address';
+                    }
+                    else{
+                      return null;
+                    }
+                  },
+                  decoration: InputDecoration(
+                      labelText: 'Address',
+                      hintText: 'Enter your address',
+                      enabled: enableQuantity,
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                              color: Color(0xFF536DFE)
+                          )
+                      ),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                              color: Color(0xFF536DFE)
+                          ))
                   ),
                 ),
               ),
               Padding(
                 padding: EdgeInsets.only(top: 40.00, left: 30.0, right: 30.0),
                 child: RaisedButton(
+                  color: Color(0xFF536DFE),
                   onPressed: () {
                     sendRequest();
                   },
-                  child: Text('Send Request'),
+                  child: Text('Send Request', style: TextStyle(color: Colors.white),),
                 ),
               )
             ],
@@ -191,7 +230,8 @@ class NewRequestsState extends State<NewRequests> {
             {
               'Item' : selectedItem,
               'Quantity' : quantity.text,
-              'Status' : "Pending"
+              'Status' : "Pending",
+              'Address' : address.text
             }
         );
         showSnackBar('Request Sent !');

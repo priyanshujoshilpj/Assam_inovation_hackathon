@@ -65,7 +65,7 @@ class RequestsState extends State<Requests> {
                     child: Text(
                       "Requests",
                       style: TextStyle(
-                          fontSize: 28.00,
+                          fontSize: 32.00,
                           color: Colors.white
                       ),
                     ),
@@ -74,7 +74,7 @@ class RequestsState extends State<Requests> {
               )
           ),
           Padding(
-            padding: EdgeInsets.only(top: 20.0, left: 30.0, right: 30.0),
+            padding: EdgeInsets.only(top: 30.0, left: 30.0, right: 30.0, bottom: 30.0),
             child: FutureBuilder(
                 future: dbRefReq.once(),
                 builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
@@ -94,7 +94,7 @@ class RequestsState extends State<Requests> {
                       print(values);
                       for(int i = 0; i<values.length; i++){
                         if(values['Request ${i+1}']['Status'] == 'Pending'){
-                          lists.add([key, values['Request ${i+1}']['Item'], values['Request ${i+1}']['Quantity'],i+1]);
+                          lists.add([key, values['Request ${i+1}']['Item'], values['Request ${i+1}']['Quantity'],i+1, values['Request ${i+1}']['Address']]);
                         }
                       }
                     });
@@ -106,30 +106,29 @@ class RequestsState extends State<Requests> {
                         scrollDirection: Axis.vertical,
                         itemBuilder: (BuildContext context, int index) {
                           return Card(
+                            color: Color(0xFF536DFE),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Padding(
                                     padding: EdgeInsets.only(top: 10.0),
                                     child: ListTile(
-                                      title: Text(lists[index][1] + " - " + lists[index][2].toString()),
-                                      subtitle: Text('Requested by ${lists[index][0]}'),
+                                      title: Text(lists[index][1] + " - " + lists[index][2].toString(), style: TextStyle(color: Colors.white),),
+                                      subtitle: Text('Requested by ${lists[index][0]}', style: TextStyle(color: Colors.white),),
                                       trailing: GestureDetector(
-                                        child: Icon(Icons.check),
+                                        child: Icon(Icons.check, color: Colors.greenAccent,),
                                         onTap: (){
                                           setState(() {
                                                 dbRefInventory.once().then((DataSnapshot snapshot){
                                                   Map<dynamic, dynamic> items = snapshot.value;
-                                                  print("Point One");
-                                                  int x1 = int.parse((items['User'][lists[index][1]]).toString());
-                                                  int x2 = int.parse((lists[index][2]).toString());
+                                                  int x1 = int.parse(items['User'][lists[index][1]].toString());
+                                                  int x2 = int.parse(lists[index][2].toString());
                                                     if (x1 > x2) {
-                                                      print("Point two");
-                                                      dbRefInventory.child(
+                                                      dbRefInventory.child( //Updates quantity in inventory
                                                           'User').update({
                                                         lists[index][1]: x1 - x2
                                                       });
-                                                      dbRefReq.child(
+                                                      dbRefReq.child( //Changes request status
                                                           lists[index][0])
                                                           .child(
                                                           'Request ${lists[index][3]}')
@@ -140,17 +139,17 @@ class RequestsState extends State<Requests> {
                                                           'Request has been successfully accepted');
                                                     }
                                                     else{
-                                                      showSnackBar('Unable to approve request as insufficient item quantity');
+                                                      showSnackBar('Unable to approve request as insufficient item quantity'); //As quantity requested by user is more than available quantity
                                                     }
                                                 });
                                           });
                                         },
                                       ),
                                       leading: GestureDetector(  //For rejecting requests
-                                        child: Icon(Icons.close),
+                                        child: Icon(Icons.close, color: Colors.redAccent,),
                                         onTap: (){
                                           setState(() {
-                                            dbRefReq.child(lists[index][0]).child('Request ${lists[index][3]}').update({
+                                            dbRefReq.child(lists[index][0]).child('Request ${lists[index][3]}').update({ //Changes status in database
                                               'Status' : 'Rejected'
                                             });
                                             showSnackBar('Request has been successfully rejected');
@@ -159,12 +158,16 @@ class RequestsState extends State<Requests> {
                                       )
                                     )
                                 ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 70.0, right: 70.0, bottom: 10.0),
+                                  child: Text('Requested at ${lists[index][4]}', style: TextStyle(color: Colors.white),),
+                                )
                               ],
                             ),
                           );
                         });
                   }
-                  return Container(
+                  return Container( //Loading
                     height: heightScreen*0.2,
                     width: widthScreen*0.4,
                     child: CircularProgressIndicator(),

@@ -78,7 +78,7 @@ class RequestsState extends State<Requests> {
                     child: Text(
                       "Requests",
                       style: TextStyle(
-                          fontSize: 28.00,
+                          fontSize: 32.00,
                           color: Colors.white
                       ),
                     ),
@@ -98,15 +98,15 @@ class RequestsState extends State<Requests> {
                     if(values == null){
                       return Container(
                         height: heightScreen*0.5,
-                        child: Text("No Requests Sent Yet", textScaleFactor: 1.3, textAlign: TextAlign.center,),
+                        child: Text("No Requests Sent Yet", textScaleFactor: 1.3, textAlign: TextAlign.center,), //If there are no requests made yet
                       );
                     }
-                    values.forEach((key, values) {
-                          lists.add([int.parse(key.toString().split(" ").last),values["Item"],values['Quantity'],values['Status']]);
+                    values.forEach((key, values) { //Converting into nested lists
+                          lists.add([int.parse(key.toString().split(" ").last),values["Item"],values['Quantity'],values['Status'],values['Address']]);
                     });
                     print(lists);
                     var temp;
-                    for(int i = 0; i< lists.length-1; i++){
+                    for(int i = 0; i< lists.length-1; i++){ // For sorting in descending order
                       if(lists[i][0] < lists[i+1][0]){
                         temp = lists[i];
                         lists[i] = lists[i+1];
@@ -121,23 +121,29 @@ class RequestsState extends State<Requests> {
                         scrollDirection: Axis.vertical,
                         itemBuilder: (BuildContext context, int index) {
                           return Card(
+                            elevation: 5.0,
+                            color: Color(0xFF536DFE),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Padding(
                                     padding: EdgeInsets.only(top: 10.0),
                                     child: ListTile(
-                                      title: Text(lists[index][1]),
-                                      subtitle: Text(lists[index][2].toString()),
-                                      trailing: Text(lists[index][3]),
+                                      title: Text(lists[index][1], textScaleFactor: 1.1, style: TextStyle(color: Colors.white),), // Item name
+                                      subtitle: Text(lists[index][2].toString(), style: TextStyle(color: Colors.white),), //Quantity
+                                      trailing: Text(lists[index][3], style: TextStyle(color: Colors.white),), // Status
                                     )
                                 ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 15.0, right: 10.0, bottom: 10.0),
+                                  child: Text('Requested at ${lists[index][4]}',textScaleFactor: 1.1 ,style: TextStyle(color: Colors.white),),
+                                )
                               ],
                             ),
                           );
                         });
                   }
-                  return Container(
+                  return Container( //For loading
                     height: heightScreen*0.2,
                     width: widthScreen*0.4,
                     child: CircularProgressIndicator(),

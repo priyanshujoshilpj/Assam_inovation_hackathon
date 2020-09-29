@@ -50,10 +50,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(top: size.height*0.2, bottom: 50.0),
+                          padding: EdgeInsets.only(top: size.height*0.15, bottom: 50.0),
                           child: Text(
                             "Inventory\nManagement\nSystem",
-                            style: TextStyle(fontSize: 36,  color: Colors.white
+                            style: TextStyle(fontSize: 44,  color: Colors.white
                             ),
                           ),
                         ),
@@ -102,6 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: size.width*0.8,
                           child: TextFormField(
                             keyboardType: TextInputType.visiblePassword,
+                            obscureText: true,
                             controller: password,
                             validator: (String value){
                               if(value.isEmpty){

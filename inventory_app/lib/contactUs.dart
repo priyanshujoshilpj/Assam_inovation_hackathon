@@ -65,9 +65,9 @@ class SendEmail extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(top: 30.00),
                     child: Text(
-                      "Inventory",
+                      "Contact Us",
                       style: TextStyle(
-                          fontSize: 28.00,
+                          fontSize: 32.00,
                           color: Colors.white
                       ),
                     ),
@@ -82,7 +82,7 @@ class SendEmail extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
+            padding: EdgeInsets.only(top: 30.0, left: 30.0, right: 30.0),
             child: Column(
               children: <Widget>[
                 TextField(

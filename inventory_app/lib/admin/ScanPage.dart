@@ -55,7 +55,7 @@ class _ScanPageState extends State<ScanPage> {
                     child: Text(
                       "Scan",
                       style: TextStyle(
-                          fontSize: 28.00,
+                          fontSize: 32.00,
                           color: Colors.white
                       ),
                     ),
@@ -84,14 +84,15 @@ class _ScanPageState extends State<ScanPage> {
                 ),
                 SizedBox(
                   height: 40.0,
-                  width: 150.0,
+                  width: 10.0,
                   child: RaisedButton(
-                    child: Text("Launch Link"),
+                    child: Text("Launch Link", style: TextStyle(color: Colors.white),),
+                    color: Color(0xFF536DFE),
                     onPressed: () async{
                       if (await canLaunch(qrCodeResult)) {
                         await launch(qrCodeResult);
                       } else {
-                        showSnackBar('Failed to launch embedded url');
+                        showSnackBar('Failed to launch embedded URL');
                       }
                     },
                   ),
