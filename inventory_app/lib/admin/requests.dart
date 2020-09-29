@@ -81,9 +81,6 @@ class RequestsState extends State<Requests> {
                   if (snapshot.hasData) {
                     lists.clear();
                     Map<dynamic, dynamic> values = snapshot.data.value;
-                    print(values);
-                    print(values.keys);
-
                     if(values == null){
                       return Container(
                         height: heightScreen*0.5,
@@ -98,7 +95,6 @@ class RequestsState extends State<Requests> {
                         }
                       }
                     });
-                    print(lists);
                     return new ListView.builder(
                         shrinkWrap: true,
                         itemCount: lists.length,
@@ -118,7 +114,6 @@ class RequestsState extends State<Requests> {
                                       trailing: GestureDetector(
                                         child: Icon(Icons.check, color: Colors.greenAccent,),
                                         onTap: (){
-                                          setState(() {
                                                 dbRefInventory.once().then((DataSnapshot snapshot){
                                                   Map<dynamic, dynamic> items = snapshot.value;
                                                   int x1 = int.parse(items['User'][lists[index][1]].toString());
@@ -128,21 +123,22 @@ class RequestsState extends State<Requests> {
                                                           'User').update({
                                                         lists[index][1]: x1 - x2
                                                       });
-                                                      dbRefReq.child( //Changes request status
-                                                          lists[index][0])
-                                                          .child(
-                                                          'Request ${lists[index][3]}')
-                                                          .update({
-                                                        'Status': 'Accepted'
+                                                      setState(() {
+                                                        dbRefReq.child( //Changes request status
+                                                            lists[index][0])
+                                                            .child(
+                                                            'Request ${lists[index][3]}')
+                                                            .update({
+                                                          'Status': 'Accepted'
+                                                        });
+                                                        showSnackBar(
+                                                            'Request has been successfully accepted');
                                                       });
-                                                      showSnackBar(
-                                                          'Request has been successfully accepted');
                                                     }
                                                     else{
                                                       showSnackBar('Unable to approve request as insufficient item quantity'); //As quantity requested by user is more than available quantity
                                                     }
                                                 });
-                                          });
                                         },
                                       ),
                                       leading: GestureDetector(  //For rejecting requests

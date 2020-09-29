@@ -57,9 +57,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                         ),
-                        Container(
-                          height: 70.0,
-                        ),
                         SizedBox(
                           width: size.width*0.8,
                           child: TextFormField(
@@ -134,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 60.0, left: size.width*0.25),
+                          padding: EdgeInsets.only(top: 20.0, left: size.width*0.25),
                           child: Row(
                             children: <Widget>[
                               RaisedButton(
@@ -180,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 30.0),
+            padding: EdgeInsets.zero,
             child: RaisedButton(
               onPressed: () {
                 startSignIn();
