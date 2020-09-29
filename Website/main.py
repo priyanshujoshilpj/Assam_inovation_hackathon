@@ -225,9 +225,8 @@ def details():
         item_user=db.child('Inventory').child('User').shallow().get()
         item_admin=db.child('Inventory').child('Admin').shallow().get()
         if inv_type=='Admin':
-            item_id=request.args['fname2']
             origin=request.args['fname3']
-            data1={"Item":item+item_id,"Origin":origin}
+            data1={"Item":item,"Origin":origin}
             re=db.child("Tracking").shallow().get()
             for i in range(1,1000):
                 brh="Order "+str(i)
