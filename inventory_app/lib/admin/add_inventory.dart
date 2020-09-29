@@ -14,6 +14,7 @@ class AddInventoryState extends State<AddInventory> {
   String dropdownValue = 'Admin Inventory';
   TextEditingController name = TextEditingController();
   TextEditingController quantity = TextEditingController();
+  TextEditingController enterOrigin = TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<
       ScaffoldState>();
   TextEditingController delquantity = TextEditingController();
@@ -21,7 +22,9 @@ class AddInventoryState extends State<AddInventory> {
   final List<DropdownMenuItem> itemsAdmin = [];
   String selectedItem;
   bool enableQuantity = false;
+  bool origin = true;
   final dbRefInventory = FirebaseDatabase.instance.reference().child("Inventory");
+  final dbRefTracking = FirebaseDatabase.instance.reference().child("Tracking");
   AddInventoryState();
 
   @override
@@ -73,7 +76,7 @@ class AddInventoryState extends State<AddInventory> {
                       "Add/Delete Items",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          fontSize: 28.00,
+                          fontSize: 32.00,
                           color: Colors.white,
                       ),
                     ),
@@ -86,18 +89,24 @@ class AddInventoryState extends State<AddInventory> {
             child: Text(
               'Add Item',
               textAlign: TextAlign.center,
-              textScaleFactor: 1.3,
+              textScaleFactor: 1.5,
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 20.0, left: 30.0, right: 30.0),
+            padding: EdgeInsets.only(top: 30.0, left: 30.0, right: 30.0),
             child: DropdownButton<String>(
               value: dropdownValue,
-              icon: Icon(Icons.arrow_drop_down_circle),
+              icon: Icon(Icons.arrow_drop_down_circle, color: Color(0xFF536DFE)),
               onChanged: (String newValue){
                 setState(() {
                   dropdownValue = newValue;
                   print(dropdownValue);
+                  if(newValue == 'User Inventory'){
+                    origin = false;
+                  }
+                  else{
+                    origin = true;
+                  }
                 });
               },
               items: <String>['Admin Inventory', 'User Inventory'].map<DropdownMenuItem<String>>((String value) {
@@ -112,7 +121,7 @@ class AddInventoryState extends State<AddInventory> {
             child: Column(
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
+                  padding: EdgeInsets.only(top: 30.0, left: 30.0, right: 30.0),
                   child: TextFormField(
                     keyboardType: TextInputType.text,
                     controller: name,
@@ -128,7 +137,8 @@ class AddInventoryState extends State<AddInventory> {
                         labelText: 'Item Name',
                         hintText: 'Enter item name',
                         enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0)
+                            borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(color: Color(0xFF536DFE))
                         ),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0))
@@ -136,7 +146,7 @@ class AddInventoryState extends State<AddInventory> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
+                  padding: EdgeInsets.only(top: 30.0, left: 30.0, right: 30.0),
                   child: TextFormField(
                     keyboardType: TextInputType.number,
                     controller: quantity,
@@ -152,13 +162,34 @@ class AddInventoryState extends State<AddInventory> {
                         labelText: 'Quantity',
                         hintText: 'Enter desired quantity',
                         enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0)
+                            borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(color: Color(0xFF536DFE))
                         ),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0))
                     ),
                   ),
                 ),
+                Visibility(
+                  visible: origin,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 30.0, left: 30.0, right: 30.0),
+                    child: TextFormField(
+                      keyboardType: TextInputType.text,
+                      controller: enterOrigin,
+                      decoration: InputDecoration(
+                          labelText: 'Origin',
+                          hintText: 'Enter origin of item',
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              borderSide: BorderSide(color: Color(0xFF536DFE))
+                          ),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0))
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
           ),
@@ -168,7 +199,8 @@ class AddInventoryState extends State<AddInventory> {
               onPressed: () {
                 addItems(dropdownValue, name.text, int.parse(quantity.text));
               },
-              child: Text('Add Item'),
+              child: Text('Add Item', style: TextStyle(color: Colors.white),),
+              color: Color(0xFF536DFE),
             ),
           ),
           Padding(
@@ -176,7 +208,7 @@ class AddInventoryState extends State<AddInventory> {
             child: Text(
               'Delete Item',
               textAlign: TextAlign.center,
-              textScaleFactor: 1.3,
+              textScaleFactor: 1.5,
             ),
           ),
           Padding(
@@ -250,7 +282,8 @@ class AddInventoryState extends State<AddInventory> {
                   hintText: 'Enter desired quantity',
                   enabled: enableQuantity,
                   enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0)
+                      borderRadius: BorderRadius.circular(10.0),
+                    borderSide: BorderSide(color: Color(0xFF536DFE))
                   ),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0))
@@ -263,7 +296,8 @@ class AddInventoryState extends State<AddInventory> {
               onPressed: () {
                 delItem(selectedItem, int.parse(delquantity.text));
               },
-              child: Text('Delete Item'),
+              child: Text('Delete Item', style: TextStyle(color: Colors.white),),
+              color: Color(0xFF536DFE),
             ),
           )
         ],
@@ -285,9 +319,24 @@ class AddInventoryState extends State<AddInventory> {
           dbRefInventory.child("Admin").set(values);
         }
       });
+      dbRefTracking.once().then((DataSnapshot snapshot) async{
+        Map<dynamic, dynamic> origins = snapshot.value;
+        int orderNumber = 1;
+        origins.forEach((key, value) {
+          if(orderNumber < int.parse(key.toString().split(" ")[1])){
+            orderNumber = int.parse(key.toString().split(" ")[1]);
+          }
+        });
+        dbRefTracking.child("Order ${orderNumber+1}").set(
+          {
+            'Item' : itemName,
+            'Origin' : enterOrigin.text
+          }
+        );
+      });
     }
     else{
-      dbRefInventory.child("User").once().then((DataSnapshot snapshot) {
+      dbRefInventory.child("User").once().then((DataSnapshot snapshot) { //For tracking
         Map<dynamic, dynamic> values = snapshot.value;
         if(values[itemName] != null){
           dbRefInventory.child("User").update({
@@ -321,12 +370,12 @@ class AddInventoryState extends State<AddInventory> {
         }
       }
       else{
-        if(user[selectedItem] > quantity){
+        if(user[selectedItem] > quantity){ //Removing selected quantity
           dbRefInventory.child('User').update({
             selectedItem: user[selectedItem]-quantity
           });
         }
-        else{
+        else{ //If less quantity, item gets removed
           dbRefInventory.child('User').child(selectedItem).remove();
         }
       }

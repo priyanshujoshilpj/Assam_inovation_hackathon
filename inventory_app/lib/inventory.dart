@@ -69,7 +69,7 @@ class InventoryScreenState extends State<InventoryScreen> {
                     child: Text(
                       "Inventory",
                       style: TextStyle(
-                          fontSize: 28.00,
+                          fontSize: 32.00,
                           color: Colors.white
                       ),
                     ),
@@ -94,8 +94,9 @@ class InventoryScreenState extends State<InventoryScreen> {
                 Container(
                   width: 30.0,
                 ),
-                RaisedButton(  //For the search button
-                  child: Text('Search'),
+                RaisedButton( // Search Button
+                  color: Color(0xFF536DFE),
+                  child: Text('Search', style: TextStyle(color: Colors.white),),
                   onPressed: (){  //Checks the list for what you searched
                     for(int i = 0; i<lists.length; i++){
                       if(lists[i][0].toString().toLowerCase().contains(search.text.toLowerCase())){  // So that 'blan' gives 'Blanket' (pattern)
@@ -108,7 +109,7 @@ class InventoryScreenState extends State<InventoryScreen> {
             )
           ),
           Padding(  //This is for the list of all items and their quantities
-            padding: EdgeInsets.only(top: 20.0, left: 30.0, right: 30.0),
+            padding: EdgeInsets.only(top: 30.0, left: 30.0, right: 30.0, bottom: 30.0),
             child: FutureBuilder(
                 future: dbRefUser.once(),
                 builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
@@ -127,14 +128,15 @@ class InventoryScreenState extends State<InventoryScreen> {
                         scrollDirection: Axis.vertical,
                         itemBuilder: (BuildContext context, int index) {
                           return Card(
+                            color: Color(0xFF536DFE),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Padding(
                                   padding: EdgeInsets.only(top: 10.0),
                                   child: ListTile(
-                                    title: Text(lists[index][0]),  //Item Name
-                                    subtitle: Text(lists[index][1].toString()),  //Quantity
+                                    title: Text(lists[index][0], textScaleFactor: 1.1,style: TextStyle(color: Colors.white),),  //Item Name
+                                    subtitle: Text(lists[index][1].toString(), style: TextStyle(color: Colors.white),),  //Quantity
                                   )
                                 ),
                               ],
@@ -159,6 +161,7 @@ class InventoryScreenState extends State<InventoryScreen> {
     Widget cancelButton = FlatButton(
       child: Text(
         "Dismiss",
+        style: TextStyle(color: Color(0xFF536DFE)),
       ),
       onPressed:  () {
         Navigator.of(context).pop();

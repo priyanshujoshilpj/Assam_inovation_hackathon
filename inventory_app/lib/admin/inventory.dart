@@ -14,7 +14,8 @@ class InventoryScreenState extends State<InventoryScreen> {
 
   InventoryScreenState();
   final dbRefInventory = FirebaseDatabase.instance.reference().child("Inventory");
-  List<dynamic> lists = [];
+  List<dynamic> lists = []; //For user database
+  List<dynamic> lists1 = []; //For admin database
   TextEditingController search = TextEditingController();
 
   @override
@@ -69,7 +70,7 @@ class InventoryScreenState extends State<InventoryScreen> {
                     child: Text(
                       "Inventory",
                       style: TextStyle(
-                          fontSize: 28.00,
+                          fontSize: 32.00,
                           color: Colors.white
                       ),
                     ),
@@ -95,11 +96,17 @@ class InventoryScreenState extends State<InventoryScreen> {
                   width: 30.0,
                 ),
                 RaisedButton(  //For the search button
-                  child: Text('Search'),
+                  child: Text('Search', style: TextStyle(color: Colors.white),),
+                  color: Color(0xFF536DFE),
                   onPressed: (){  //Checks the list for what you searched
                     for(int i = 0; i<lists.length; i++){
                       if(lists[i][0].toString().toLowerCase().contains(search.text.toLowerCase())){  // So that 'blan' gives 'Blanket' (pattern)
-                        searchDialog(context, i);  //Open Dialog Box with item name and no of items
+                        searchDialog(context, lists[i]);  //Open Dialog Box with item name and no of items
+                      }
+                    }
+                    for(int i=0; i<lists1.length; i++){
+                      if(lists1[i][0].toString().toLowerCase().contains(search.text.toLowerCase())){  // So that 'blan' gives 'Blanket' (pattern)
+                        searchDialog(context, lists1[i]);  //Open Dialog Box with item name and no of items
                       }
                     }
                   },
@@ -108,7 +115,7 @@ class InventoryScreenState extends State<InventoryScreen> {
             )
           ),
           Padding(padding: EdgeInsets.only(top: 30.00, left: 30.0, right: 30.0),
-            child: Text('Admin Inventory', textAlign: TextAlign.center, textScaleFactor: 1.3,),
+            child: Text('Admin Inventory', textAlign: TextAlign.center, textScaleFactor: 1.5,),
           ),
           Padding(  //This is for the list of all items and their quantities
             padding: EdgeInsets.only(top: 20.0, left: 30.0, right: 30.0),
@@ -116,28 +123,29 @@ class InventoryScreenState extends State<InventoryScreen> {
                 future: dbRefInventory.child("Admin").once(),
                 builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
                   if (snapshot.hasData) {
-                    lists.clear();
+                    lists1.clear();
                     Map<dynamic, dynamic> values = snapshot.data.value;  //Map of the data received
                     print(values);
                     values.forEach((key, values) {
-                      lists.add([key,values]); // Taking important stuff and converting to list (May change it to use Map by default to save time)
+                      lists1.add([key,values]); // Taking important stuff and converting to list (May change it to use Map by default to save time)
                     });
-                    print(lists);
+                    print(lists1);
                     return new ListView.builder(
                         shrinkWrap: true,
-                        itemCount: lists.length,
+                        itemCount: lists1.length,
                         physics: ScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         itemBuilder: (BuildContext context, int index) {
                           return Card(
+                            color: Color(0xFF536DFE),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Padding(
                                     padding: EdgeInsets.only(top: 10.0),
                                     child: ListTile(
-                                      title: Text(lists[index][0]),  //Item Name
-                                      subtitle: Text(lists[index][1].toString()),  //Quantity
+                                      title: Text(lists1[index][0], textScaleFactor: 1.1, style: TextStyle(color: Colors.white),),  //Item Name
+                                      subtitle: Text(lists1[index][1].toString(), style: TextStyle(color: Colors.white),),  //Quantity
                                     )
                                 ),
                               ],
@@ -153,10 +161,10 @@ class InventoryScreenState extends State<InventoryScreen> {
                 }),
           ),
           Padding(padding: EdgeInsets.only(top: 20.00, left: 30.0, right: 30.0),
-            child: Text('User Inventory', textAlign: TextAlign.center, textScaleFactor: 1.3,),
+            child: Text('User Inventory', textAlign: TextAlign.center, textScaleFactor: 1.5,),
           ),
           Padding(  //This is for the list of all items and their quantities
-            padding: EdgeInsets.only(top: 20.0, left: 30.0, right: 30.0),
+            padding: EdgeInsets.only(top: 30.0, left: 30.0, right: 30.0, bottom: 30.0),
             child: FutureBuilder(
                 future: dbRefInventory.child("User").once(),
                 builder: (context, AsyncSnapshot<DataSnapshot> snapshot) {
@@ -175,14 +183,15 @@ class InventoryScreenState extends State<InventoryScreen> {
                         scrollDirection: Axis.vertical,
                         itemBuilder: (BuildContext context, int index) {
                           return Card(
+                            color: Color(0xFF536DFE),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Padding(
                                   padding: EdgeInsets.only(top: 10.0),
                                   child: ListTile(
-                                    title: Text(lists[index][0]),  //Item Name
-                                    subtitle: Text(lists[index][1].toString()),  //Quantity
+                                    title: Text(lists[index][0], textScaleFactor: 1.1, style: TextStyle(color: Colors.white),),  //Item Name
+                                    subtitle: Text(lists[index][1].toString(), style: TextStyle(color: Colors.white),),  //Quantity
                                   )
                                 ),
                               ],
@@ -211,10 +220,11 @@ class InventoryScreenState extends State<InventoryScreen> {
       );
   }
 
-  searchDialog(BuildContext context, int position) {  //This is for the dialog to show searched item (One at a time though)
+  searchDialog(BuildContext context, List<dynamic> item) {  //This is for the dialog to show searched item (One at a time though)
     Widget cancelButton = FlatButton(
       child: Text(
         "Dismiss",
+        style: TextStyle(color: Color(0xFF536DFE)),
       ),
       onPressed:  () {
         Navigator.of(context).pop();
@@ -224,13 +234,13 @@ class InventoryScreenState extends State<InventoryScreen> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text(
-        "${lists[position][0]}",
+        "${item[0]}",
       ),
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.00)
       ),
       content: Text(
-        "${lists[position][1].toString()}",
+        "${item[1].toString()}",
       ),
       actions: [
         cancelButton,

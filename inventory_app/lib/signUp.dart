@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'dart:async';
 
+import 'package:inventoryapp/login.dart';
+
 class SignUp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -22,6 +24,7 @@ class _SignUpState extends State<SignUp> {
         .of(context)
         .size
         .height;
+    double widthScreen = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _scaffoldKey,
       body: ListView(
@@ -71,7 +74,8 @@ class _SignUpState extends State<SignUp> {
                         labelText: 'Username',
                         hintText: 'Enter your username',
                         enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0)
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(color: Color(0xFF536DFE))
                         ),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0))
@@ -95,7 +99,8 @@ class _SignUpState extends State<SignUp> {
                         labelText: 'Email ID',
                         hintText: 'Enter your Email ID',
                         enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0)
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(color: Color(0xFF536DFE))
                         ),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0))
@@ -107,6 +112,7 @@ class _SignUpState extends State<SignUp> {
                   TextFormField(
                     keyboardType: TextInputType.text,
                     controller: passwordController,
+                    obscureText: true,
                     validator: (String value){
                       if(value.isEmpty){
                         return 'Enter Password';
@@ -119,10 +125,15 @@ class _SignUpState extends State<SignUp> {
                         labelText: 'Password',
                         hintText: 'Enter your password',
                         enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0)
+                            borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(color: Color(0xFF536DFE))
                         ),
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0))
+                            borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(
+                            color: Color(0xFF536DFE)
+                          )
+                        )
                     ),
                   ),
                   Container(
@@ -131,16 +142,20 @@ class _SignUpState extends State<SignUp> {
                   Row(
                     children: <Widget>[
                       RaisedButton(
-                        child: Text('Cancel'),
+                        child: Text('Go Back', style: TextStyle(color: Colors.white),),
+                        color: Color(0xFF536DFE),
                         onPressed: (){
-                          Navigator.pop(context);
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => LoginScreen()
+                          ));
                         },
                       ),
                       Container(
-                        width: 30.0,
+                        width: widthScreen*0.5
                       ),
                       RaisedButton(
-                        child: Text('Submit'),
+                        child: Text('Submit', style: TextStyle(color: Colors.white),),
+                        color: Color(0xFF536DFE),
                         onPressed: (){
                           final dbRefUser = FirebaseDatabase.instance.reference().child("User");
                           dbRefUser.once().then((DataSnapshot snapshot) {

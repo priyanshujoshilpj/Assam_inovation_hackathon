@@ -71,9 +71,9 @@ class _ProfileScreenAdminState extends State<ProfileScreenAdmin> {
                     Padding(
                       padding: EdgeInsets.only(top: 30.00),
                       child: Text(
-                        "Hello ${currentUserData.UserName.split(" ")[0]}",
+                        "Hello ${currentUserData.UserName.split(" ")[0]}", //Current Usser's first name
                         style: TextStyle(
-                            fontSize: 28.00,
+                            fontSize: 32.00,
                             color: Colors.white
                         ),
                       ),
