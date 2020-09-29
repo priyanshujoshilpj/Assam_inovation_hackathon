@@ -16,7 +16,7 @@ Flask
 ## SPECIFICATIONS
 A user can access the app/website through Email ID or he/she can sign in with Google.
 Due to security of secret items, we have divided two different types of profiles - User and Admin. Only the Admin is able to access secret items and can track them.
- - Public User
+ ### Public User
  
 When a user logs into the app/website there are four different sections:
   - Profile
@@ -32,7 +32,7 @@ Under Inventory he can find a variety of inventory accessible to him. There is a
 
 If he finds that something is not listed in the inventory section and he thinks it is required, he can contact us through the Contact Support section. 
 When he/she submits a query/request the Admin gets the message over mail about the same also the user will receive mail that his query/request is successfully received.
-- Admin User
+### Admin User
 
 When an Admin logs in he has three different categories to access:
 - Profile
