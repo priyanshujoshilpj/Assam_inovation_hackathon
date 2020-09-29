@@ -103,6 +103,7 @@ def signup():
         if username not in users.val():
             data={"Username":username,"Email":email,"Password":password}
             db.child("User").child(str(username)).set(data)
+            db.child("Requests").child(str(username)).child("Request").set("None")
             return render_template("login.html",info="Successfully Signed Up! Try Login!")
         else:
             return render_template("login.html",info="Already have an account! Try Login!")
@@ -154,12 +155,14 @@ def pending():
     if ("user" and "password") in session and (session["user"]=="Anurag Porel" and session["password"]=="bug@123"):
         r1=dict((db.child('Requests').child('G Shalom Shreyan').child('Request 1').get()).val())
         r2=dict((db.child('Requests').child('G Shalom Shreyan').child('Request 2').get()).val())
+        r3=dict((db.child('Requests').child('Passionate Bong').child('Request 1').get()).val())
         
         
-        t1=('Request 1: '+'Item: '+str(r1['Item'])+', Quantity: '+str(r1['Quantity'])+', Status: '+str(r1['Status'])+', Destination: '+str(r1['Address']))
-        t2=('Request 2: '+'Item: '+str(r2['Item'])+', Quantity: '+str(r2['Quantity'])+', Status: '+str(r2['Status'])+', Destination: '+str(r2['Address']))
+        t1=('Request 1: '+'Item: '+str(r1['Item'])+', Quantity: '+str(r1['Quantity'])+', Status: '+str(r1['Status'])+', Destination: '+str(r1['Address'])+' , User: G Shalom Shreyan')
+        t2=('Request 2: '+'Item: '+str(r2['Item'])+', Quantity: '+str(r2['Quantity'])+', Status: '+str(r2['Status'])+', Destination: '+str(r2['Address'])+' , User: G Shalom Shreyan')
+        t3=('Request 2: '+'Item: '+str(r3['Item'])+', Quantity: '+str(r3['Quantity'])+', Status: '+str(r3['Status'])+', Destination: '+str(r3['Address'])+' , User: Passionate Bong')
         
-        return render_template('request_action.html',t1=t1,t2=t2)
+        return render_template('request_action.html',t1=t1,t2=t2,t3=t3)
     elif ("user" and "password") in session and (session["user"]!="Anurag Porel" or session["password"]!="bug@123"):
         return render_template("404.html")
     else:
@@ -204,11 +207,11 @@ def book():
         destiny=request.args['fname']
 
         data={"Address":destiny,"Item":item, "Quantity":quantity, "Status":"Pending"}
-        re=db.child("Requests").child("G Shalom Shreyan").shallow().get()
+        re=db.child("Requests").child(session['user']).shallow().get()
         for i in range(1,1000):
             brh="Request "+str(i)
             if brh not in re.val():
-                db.child("Requests").child("G Shalom Shreyan").child(brh).set(data)
+                db.child("Requests").child(session['user']).child(brh).set(data)
                 break
             else:
                 continue
